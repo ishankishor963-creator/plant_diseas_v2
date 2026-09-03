@@ -1,0 +1,7 @@
+streamlit
+requests
+pandas
+numpy
+Pillow
+tensorflow-cpu
+# anthropic   # uncomment once you add an ANTHROPIC_API_KEY in st.secrets
