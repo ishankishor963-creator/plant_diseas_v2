@@ -1,7 +1,0 @@
-streamlit
-requests
-pandas<3
-numpy<2.0
-Pillow
-tensorflow-cpu==2.16.2
-# anthropic   # uncomment once you add an ANTHROPIC_API_KEY in st.secrets
