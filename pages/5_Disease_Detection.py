@@ -9,10 +9,64 @@ st.caption(
     "existing MobileNetV2 model from the plant_disease_modal project."
 )
 
-MODEL_PATH = "model/plant_disease_model.h5"  # copy your trained model here
-# TODO: replace with your real class list (38 classes from PlantVillage
-# in your original project) in the same order the model was trained on.
-CLASS_NAMES = ["Class_0_placeholder", "Class_1_placeholder", "..."]
+MODEL_PATH = "model/plant_model_v5.keras"  # your trained model
+CLASS_NAMES = [
+    "Apple___Apple_scab",
+    "Apple___Black_rot",
+    "Apple___Cedar_apple_rust",
+    "Apple___healthy",
+    "Blueberry___healthy",
+    "Cherry_(including_sour)___Powdery_mildew",
+    "Cherry_(including_sour)___healthy",
+    "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot",
+    "Corn_(maize)___Common_rust_",
+    "Corn_(maize)___Northern_Leaf_Blight",
+    "Corn_(maize)___healthy",
+    "Grape___Black_rot",
+    "Grape___Esca_(Black_Measles)",
+    "Grape___Leaf_blight_(Isariopsis_Leaf_Spot)",
+    "Grape___healthy",
+    "Orange___Citrus_Canker",
+    "Orange___Haunglongbing_(Citrus_greening)",
+    "Orange___Multiple_Diseases",
+    "Orange___Nutrient_Deficiency",
+    "Orange___healthy",
+    "Peach___Bacterial_spot",
+    "Peach___healthy",
+    "Pepper,_bell___Bacterial_spot",
+    "Pepper,_bell___healthy",
+    "Potato___Early_blight",
+    "Potato___Late_blight",
+    "Potato___healthy",
+    "Raspberry___healthy",
+    "Soybean___Bacterial_Pustule",
+    "Soybean___Brown_Spot",
+    "Soybean___Crestamento",
+    "Soybean___Ferrugen",
+    "Soybean___Frogeye_Leaf_Spot",
+    "Soybean___Mosaic_Virus",
+    "Soybean___Powdery_Mildew",
+    "Soybean___Rust",
+    "Soybean___Septoria",
+    "Soybean___Southern_Blight",
+    "Soybean___Sudden_Death_Syndrome",
+    "Soybean___Target_Leaf_Spot",
+    "Soybean___Yellow_Mosaic",
+    "Soybean___healthy",
+    "Squash___Powdery_mildew",
+    "Strawberry___Leaf_scorch",
+    "Strawberry___healthy",
+    "Tomato___Bacterial_spot",
+    "Tomato___Early_blight",
+    "Tomato___Late_blight",
+    "Tomato___Leaf_Mold",
+    "Tomato___Septoria_leaf_spot",
+    "Tomato___Spider_mites Two-spotted_spider_mite",
+    "Tomato___Target_Spot",
+    "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+    "Tomato___Tomato_mosaic_virus",
+    "Tomato___healthy",
+]
 
 
 @st.cache_resource
@@ -40,7 +94,7 @@ model = load_model()
 if model is None:
     real_error = st.session_state.get("model_load_error", "Unknown error")
     st.warning(
-        f"Couldn't load the model at `model/plant_disease_model.h5`.\n\n"
+        f"Couldn't load the model at `model/plant_model_v5.keras`.\n\n"
         f"**Actual error:** `{real_error}`\n\n"
         "The page still works below for testing the upload/camera flow.",
         icon="⚠️",
