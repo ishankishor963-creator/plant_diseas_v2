@@ -22,7 +22,7 @@ if refresh or not st.session_state["sensor_history"]:
 
 latest = st.session_state["sensor_history"][-1]
 
-if latest["source"] == "demo":
+if latest.get("source") == "demo":
     st.warning(
         "Showing demo data — set your device URL in the sidebar to see "
         "live sensor readings.",
@@ -30,20 +30,19 @@ if latest["source"] == "demo":
     )
 
 c1, c2 = st.columns(2)
-c1.metric("Soil Moisture", f"{latest['soil_moisture']}%")
-c2.metric("Light Level", f"{latest['light']}%")
-st.caption(f"Last updated: {latest['timestamp']} ({latest['source']} data)")
+c1.metric("Soil Moisture", f"{latest.get('soil_moisture', 'N/A')}%")
+c2.metric("Light Level", f"{latest.get('light', 'N/A')}%")
+st.caption(f"Last updated: {latest.get('timestamp', '—')} ({latest.get('source', 'unknown')} data)")
 
 st.divider()
 st.subheader("Trend")
+
 if len(st.session_state["sensor_history"]) > 1:
     df = pd.DataFrame(st.session_state["sensor_history"])
-    df = df.set_index("timestamp")[["soil_moisture", "light"]]
-    st.line_chart(df)
-else:
-    st.info("Refresh a few times to build up a trend chart.")
 
-if auto:
-    import time
-    time.sleep(10)
-    st.rerun()
+    # Guard against old cached entries that predate the "light" sensor
+    # (or any future key change) so the chart never crashes.
+    for col in ["soil_moisture", "light"]:
+        if col not in df.columns:
+            df[col] = None
+    if "timestamp" not in df.columns:
