@@ -46,3 +46,14 @@ if len(st.session_state["sensor_history"]) > 1:
         if col not in df.columns:
             df[col] = None
     if "timestamp" not in df.columns:
+        df["timestamp"] = range(len(df))
+
+    df = df.set_index("timestamp")[["soil_moisture", "light"]]
+    st.line_chart(df)
+else:
+    st.info("Refresh a few times to build up a trend chart.")
+
+if auto:
+    import time
+    time.sleep(10)
+    st.rerun()
