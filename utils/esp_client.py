@@ -8,10 +8,10 @@ realistic demo data so the rest of the app keeps working.
 
 EXPECTED DEVICE API (adjust to match your firmware):
     GET  http://<device-ip>/data
-         -> {"soil_moisture": 42.5, "humidity": 61.2, "temperature": 27.8}
+         -> {"soil_moisture": 42.5, "light": 68.0}
 
     GET  http://<device-ip>/capture
-         -> raw JPEG bytes (image/jpeg)
+         -> raw JPEG bytes (image/jpeg) — only if you add a camera later
 
 If your firmware uses different routes or JSON keys, just edit the
 paths/keys below — the rest of the app doesn't need to change.
@@ -38,8 +38,7 @@ def _demo_sensor_reading() -> dict:
     """Fake-but-plausible sensor values, used when the device is unreachable."""
     return {
         "soil_moisture": round(random.uniform(15, 70), 1),  # %
-        "humidity": round(random.uniform(30, 90), 1),       # %
-        "temperature": round(random.uniform(18, 38), 1),    # deg C
+        "light": round(random.uniform(10, 95), 1),          # %
         "timestamp": time.strftime("%H:%M:%S"),
         "source": "demo",
     }
@@ -47,7 +46,7 @@ def _demo_sensor_reading() -> dict:
 
 def get_sensor_data() -> dict:
     """
-    Fetches the latest soil moisture / humidity / temperature reading.
+    Fetches the latest soil moisture / light reading.
     Returns a dict with a "source" key of "device" or "demo" so pages
     can show a banner when they're looking at fake data.
     """
@@ -61,8 +60,7 @@ def get_sensor_data() -> dict:
         payload = resp.json()
         return {
             "soil_moisture": payload.get("soil_moisture"),
-            "humidity": payload.get("humidity"),
-            "temperature": payload.get("temperature"),
+            "light": payload.get("light"),
             "timestamp": time.strftime("%H:%M:%S"),
             "source": "device",
         }
